@@ -1,0 +1,134 @@
+---
+import Logo from "./Logo.astro";
+---
+
+<header>
+  <Logo />
+  <button id="menu-button" class="menu-button">&nbsp;</button>
+  <nav id="nav-menu" class="navigation">
+    <Logo />
+    <a href="">Law</a>
+    <a href="">Sport</a>
+    <a href="">Climate</a>
+    <a href="">Business</a>
+  </nav>
+  <div id="menu-overlay" class="overlay">&nbsp;</div>
+
+  <script>
+    const menuBtn = document.getElementById("menu-button");
+    const menuOverlay = document.getElementById("menu-overlay");
+    const menu = document.getElementById("nav-menu");
+
+    function toggleClasses() {
+      menu.classList.toggle("navigation--visible");
+      menuOverlay.classList.toggle("overlay--visible");
+    }
+
+    menuBtn.addEventListener("click", toggleClasses);
+    menuOverlay.addEventListener("click", toggleClasses);
+  </script>
+</header>
+
+<style lang="scss">
+  @import "../styles/_variables.scss";
+
+  header {
+    position: sticky;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+
+    & .menu-button {
+      position: relative;
+      height: 4px;
+      width: 40px;
+      border: none;
+      color: $color-black;
+      background-color: currentColor;
+      outline: none;
+
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        height: 4px;
+        width: 40px;
+        border: none;
+        background-color: currentColor;
+      }
+
+      &::before {
+        top: 8px;
+      }
+
+      &::after {
+        bottom: 8px;
+      }
+    }
+
+    & .menu-button:focus {
+      color: $color-focus;
+    }
+
+    & .navigation {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      width: 25rem;
+      transform: translateX(-100%);
+      opacity: 0;
+      background-color: $color-gray-dark;
+      transition: all 0.3s;
+      z-index: 20;
+
+      &--visible {
+        transform: translateX(0);
+        opacity: 1;
+      }
+
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      align-items: start;
+      padding-top: 2rem;
+      padding-left: 2rem;
+
+      & a,
+      a:link,
+      a:visited {
+        color: $color-white;
+        letter-spacing: 1px;
+        font-size: 2rem;
+        font-family: "Arvo", serif;
+        text-decoration: none;
+        text-transform: uppercase;
+        border-bottom: solid currentColor 2px;
+
+        &:active {
+          color: $color-accent;
+        }
+      }
+    }
+
+    & .overlay {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      transform: scale(0);
+      opacity: 0;
+      background-color: $color-overlay;
+      transition: opacity 0.2s;
+      z-index: 10;
+
+      &--visible {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+  }
+</style>

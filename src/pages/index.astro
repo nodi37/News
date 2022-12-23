@@ -1,0 +1,18 @@
+---
+import MainArt from '../components/MainArt.astro';
+import Layout from '../layouts/Layout.astro';
+import { dummyData } from '../services/newsService';
+---
+
+<Layout title="N - Home">
+	<main>
+		<MainArt article={dummyData[0]} />
+	</main>
+</Layout>
+
+<style lang="scss">
+ main {
+	padding: 1.5rem;
+	padding-top: 0;
+ }
+</style>

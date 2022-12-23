@@ -1,0 +1,68 @@
+---
+import IArticle from "../interfaces/IArtcile";
+
+interface Props {
+  article: IArticle;
+}
+
+const { article } = Astro.props;
+---
+
+<div class="article">
+  <img class="article__image" src={article.urlToImage} />
+  <h1 class="article__title">{article.title}</h1>
+  <span class="article__author">{article.author}</span>
+  <p class="article__description">{article.description}</p>
+  <a class="article__action" href={article.url}>Read more</a>
+</div>
+
+<style lang="scss">
+    @import '../styles/_variables.scss';
+
+    .article {
+
+        &__image {
+            max-height: 25rem;
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+
+        &__title {
+            font-size: 3rem;
+            line-height: 1.1;
+            margin-bottom: .5rem;
+            color: $color-primary;
+        }
+
+        &__author {
+            display: block;
+            color: $color-gray-light;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        &__description {
+            display: block;
+            color: $color-gray;
+            font-size: 1.4rem;
+            line-height: 1.6;
+            margin-bottom: 3rem;
+        }
+
+        &__action,
+        &__action:link,
+        &__action:visited  {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: $color-accent;
+            color: $color-white;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+    }
+
+</style>
