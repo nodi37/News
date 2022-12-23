@@ -1,0 +1,70 @@
+---
+import IArticle from "../interfaces/IArtcile";
+
+interface Props {
+  articles: IArticle[];
+}
+
+function makeDesc(dsc: string): string {
+  const firstSlice = dsc.slice(0, 60);
+  const secondSlice = firstSlice.slice(0, firstSlice.lastIndexOf(" "));
+  return secondSlice + "...";
+}
+
+const { articles } = Astro.props;
+---
+
+<div class="new-arts">
+  <h3 class="new-arts__header">New</h3>
+
+  {
+    articles.map((art) => (
+      <a class="new-arts__link" href={art.url}>
+        <div class="new-arts__art">
+          <h4 class="new-arts__art-title">{art.title}</h4>
+          <p class="new-arts__art-dsc">{makeDesc(art.description)}</p>
+        </div>
+      </a>
+    ))
+  }
+</div>
+
+<style lang="scss">
+  @import "../styles/_variables.scss";
+
+  .new-arts {
+    padding: 2rem;
+    color: $color-white;
+    background-color: $color-navy-dark;
+
+    &__header {
+      font-size: 2.5rem;
+      color: $color-accent;
+    }
+
+    &__link,
+    &__link:link,
+    &__link:visited {
+      display: block;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid $color-gray-dark;
+      text-decoration: none;
+      color: unset;
+    }
+
+    &__link:last-child {
+      padding-bottom: 0.5rem;
+      border-bottom: none;
+    }
+
+    &__art-title {
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+    }
+
+    &__art-dsc {
+      font-size: 1.2rem;
+      color: $color-gray;
+    }
+  }
+</style>

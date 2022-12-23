@@ -1,5 +1,6 @@
 ---
 import MainArt from '../components/MainArt.astro';
+import NewSection from '../components/NewSection.astro';
 import Layout from '../layouts/Layout.astro';
 import { dummyData } from '../services/newsService';
 ---
@@ -7,6 +8,7 @@ import { dummyData } from '../services/newsService';
 <Layout title="N - Home">
 	<main>
 		<MainArt article={dummyData[0]} />
+		<NewSection articles={dummyData.slice(1,4)} />
 	</main>
 </Layout>
 
