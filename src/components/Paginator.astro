@@ -1,0 +1,121 @@
+---
+export interface Props {
+  pageNumber: number;
+  endpoint: string;
+}
+
+const { pageNumber, endpoint } = Astro.props;
+---
+
+<div class="paginator">
+  <button disabled={pageNumber < 2} class="paginator__btn" data-endpoint={endpoint} data-page={pageNumber - 1}>Prev</button>
+  <div class="paginator__pages">
+    {pageNumber < 2 && <span class="paginator__page-num paginator__page-num--inactive">0</span>}
+    {
+      pageNumber > 1 && (
+        <a href={`${endpoint}/${pageNumber - 1}`} class="paginator__page-num">
+          {pageNumber - 1}
+        </a>
+      )
+    }
+    <span class="paginator__page-num paginator__page-num--current">{pageNumber}</span>
+    <a href={`${endpoint}/${pageNumber + 1}`} class="paginator__page-num">{pageNumber + 1}</a>
+  </div>
+  <button class="paginator__btn" data-endpoint={endpoint} data-page={pageNumber + 1}>Next</button>
+
+  <script>
+    const btns = document.querySelectorAll(".paginator__btn");
+    btns.forEach((btn) => btn.addEventListener("click", pgBtnHandler));
+
+    function pgBtnHandler(e) {
+      const { endpoint, page } = e.target.dataset;
+      window.location.replace(`${endpoint}/${page}`);
+    }
+  </script>
+</div>
+
+<style lang="scss">
+  @import "../styles/_variables.scss";
+
+  .paginator {
+    @media screen and (min-width: $bp-desktop) {
+      grid-column: 1/-1;
+      margin-bottom: 5rem;
+    }
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    &__btn {
+      font-size: 2.5rem;
+      color: $color-gray;
+      text-transform: lowercase;
+      text-decoration-line: underline;
+      text-decoration-thickness: 2px;
+      border: none;
+      background-color: transparent;
+      transition: transform 0.2s, color 0.2s;
+      cursor: pointer;
+
+      &:disabled {
+        opacity: 0;
+      }
+
+      &:hover {
+        transform: scale(1.05);
+        color: $color-accent;
+      }
+    }
+
+    &__pages {
+      display: flex;
+
+      @media screen and (min-width: $bp-desktop) {
+        gap: 2rem;
+      }
+    }
+
+    &__page-num {
+      color: $color-gray;
+      font-size: 1.8rem;
+      text-decoration: none;
+      height: 4rem;
+      width: 4rem;
+      border-radius: 99px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.2s, color 0.2s, background-color 0.2s;
+
+      &--inactive {
+        opacity: 0;
+      }
+
+      &--current {
+        font-size: 2.4rem;
+        color: $color-white;
+        background-color: $color-accent;
+
+        &:hover {
+          transform: scale(1) !important;
+          color: $color-white !important;
+          background-color: $color-accent !important;
+        }
+      }
+
+      &:hover {
+        transform: scale(1.1);
+        color: $color-white;
+        background-color: $color-gray-light;
+      }
+
+      @media screen and (min-width: $bp-desktop) {
+        font-size: 1.6rem;
+        height: 3rem;
+        width: 3rem;
+      }
+    }
+  }
+</style>

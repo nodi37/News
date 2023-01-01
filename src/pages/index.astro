@@ -1,20 +1,28 @@
 ---
-import MainArt from '../components/MainArt.astro';
-import NewSection from '../components/NewSection.astro';
-import Layout from '../layouts/Layout.astro';
-import { dummyData } from '../services/newsService';
+import CategoryIndexPage from "../components/CategoryIndexPage.astro";
+import Layout from "../layouts/Layout.astro";
+import loadNews, { dummyData } from "../services/newsService";
+
+const req = await loadNews(1, 10);
+const articles = req.status == "ok" ? req.articles : dummyData;
 ---
 
 <Layout title="N - Home">
-	<main>
-		<MainArt article={dummyData[0]} />
-		<NewSection articles={dummyData.slice(1,4)} />
-	</main>
+  <CategoryIndexPage articles={articles} endpoint="page" />
 </Layout>
 
 <style lang="scss">
- main {
-	padding: 1.5rem;
-	padding-top: 0;
- }
+  @import "../styles/_variables.scss";
+
+  main {
+    padding: 1.5rem;
+    padding-top: 0;
+
+    @media screen and (min-width: $bp-desktop) {
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5rem;
+    }
+  }
 </style>

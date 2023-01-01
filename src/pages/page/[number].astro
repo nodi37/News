@@ -1,0 +1,43 @@
+---
+import ArticleList from "../../components/ArticleList.astro";
+import Paginator from "../../components/Paginator.astro";
+import Layout from "../../layouts/Layout.astro";
+import loadNews, { dummyData } from "../../services/newsService";
+
+const { number } = Astro.params;
+
+const req = await loadNews(+number, 10);
+const articles = req.status == "ok" ? req.articles : dummyData;
+---
+
+<Layout title={"N. - News page " + number}>
+  <main>
+    <h4 class="page-header">All news - page {number}</h4>
+    <ArticleList articles={articles} firstNumber={(+number - 1) * 10} />
+    <Paginator pageNumber={+number} endpoint="/page" />
+  </main>
+</Layout>
+
+<style lang="scss">
+  @import "../../styles/_variables.scss";
+
+  .page-header {
+    display: block;
+    margin-bottom: 1rem;
+    color: $color-gray;
+    @media screen and (min-width: $bp-desktop) {
+      font-size: 2rem;
+      margin-bottom: 3rem;
+    }
+  }
+
+  main {
+    padding: 1.5rem;
+    padding-top: 0;
+    @media screen and (min-width: $bp-desktop) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 0;
+    }
+  }
+</style>

@@ -1,0 +1,47 @@
+---
+import ArticleList from "../../components/ArticleList.astro";
+import Paginator from "../../components/Paginator.astro";
+import Layout from "../../layouts/Layout.astro";
+import loadNews, { dummyData } from "../../services/newsService";
+import { capitalizeString } from "../../utils/string.utlis";
+import { routes } from "../../config/routes.config";
+
+const { number, category } = Astro.params;
+
+if (!routes.includes(category) || isNaN(+number)) return Astro.redirect("/404");
+
+const req = await loadNews(+number, 10, category);
+const articles = req.status == "ok" ? req.articles : dummyData;
+---
+
+<Layout title={"N - " + capitalizeString(category)}>
+  <main>
+    <h4 class="page-header">Check what's new in {category} - page {number}</h4>
+    <ArticleList articles={articles} firstNumber={(+number - 1) * 10} />
+    <Paginator pageNumber={+number} endpoint={"/" + category} />
+  </main>
+</Layout>
+
+<style lang="scss">
+  @import "../../styles/_variables.scss";
+
+  .page-header {
+    display: block;
+    margin-bottom: 1rem;
+    color: $color-gray;
+    @media screen and (min-width: $bp-desktop) {
+      font-size: 2rem;
+      margin-bottom: 3rem;
+    }
+  }
+
+  main {
+    padding: 1.5rem;
+    padding-top: 0;
+    @media screen and (min-width: $bp-desktop) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 0;
+    }
+  }
+</style>

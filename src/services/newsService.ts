@@ -2,14 +2,14 @@ import { IApiErrorRes, IApiSuccessRes } from "../interfaces/IApiRes";
 import IArticle from "../interfaces/IArtcile";
 import axios from "axios";
 
-export default async function loadNews(page: number, keyword?: string): Promise<IArticle[] | IApiErrorRes> {
+export default async function loadNews(page: number, count: number, keyword?: string): Promise<IApiSuccessRes | IApiErrorRes> {
     const apiKey = import.meta.env.NEWS_API_KEY;
 
     try {
-        const res = await axios.get<IApiSuccessRes>(`https://newsapi.org/v2/everything?q=${(keyword ?? 'a')}&apiKey=${apiKey}&language=en&pageSize=10&page=${page}`);
-        return res.data.articles;
+        const res = await axios.get<IApiSuccessRes>(`https://newsapi.org/v2/everything?q=${(keyword ?? 'a')}&apiKey=${apiKey}&language=en&pageSize=${count}&page=${page}`);
+        return res.data;
     } catch (error) {
-        console.log(error)
+        //console.log(error)
         return error.response.data as IApiErrorRes;
     }
 }

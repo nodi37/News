@@ -1,0 +1,36 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="N - Not found!">
+  <!-- This can be a component with code and message prop -->
+  <div class="err">
+    <span class="err__code">404</span>
+    <p class="err__message">This page doesn't exsist!</p>
+  </div>
+  <!-- This can be a component with code and message prop -->
+</Layout>
+
+<style lang="scss">
+  @import "../styles/_variables.scss";
+
+  .err {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    margin-top: 15rem;
+
+    &__code {
+      color: $color-gray-light;
+      font-size: 6rem;
+      font-weight: 700;
+    }
+
+    &__message {
+      font-size: 2.5rem;
+      font-weight: 600;
+    }
+  }
+</style>

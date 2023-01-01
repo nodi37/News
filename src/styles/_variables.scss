@@ -1,12 +1,18 @@
-$color-primary: #0694ec;
-$color-accent: #F15D51;
-$color-tertiary: #FCFFE7;
+//Breakpoints
+$bp-desktop: 68.75em;
+
+//Colors
 $color-focus: rgb(0, 140, 255);
+$color-accent: #F15D51;
+$color-background: #fdfff6;
 $color-overlay: #8080808e;
 $color-gray: slategray;
 $color-gray-light: #949aa1;
 $color-gray-dark: #4f4f4f;
 $color-navy-dark: #000041;
+$color-blue-light: #0694ec;
 $color-black: black;
 $color-white: white;
 
+//Others
+$box-shadow: 0px 0px 17px 0px #42445a2a;

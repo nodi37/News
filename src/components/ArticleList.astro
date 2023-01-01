@@ -1,0 +1,33 @@
+---
+import Article from "./Article.astro";
+import IArticle from "../interfaces/IArtcile";
+
+interface Props {
+  articles: IArticle[];
+  firstNumber: number;
+}
+
+const { articles, firstNumber } = Astro.props;
+---
+
+<div class="articles-list">
+  {articles.map((art, i) => <Article article={art} ordinalNumber={i + 1 + firstNumber} />)}
+</div>
+
+<style lang="scss">
+  @import "../styles/_variables.scss";
+  .articles-list {
+    @media screen and (min-width: $bp-desktop) {
+      grid-column: 1/-1;
+      display: grid;
+      gap: 3rem;
+      grid-template-columns: subgrid;
+      margin-bottom: 5rem;
+    }
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+</style>

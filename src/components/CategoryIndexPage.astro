@@ -1,0 +1,37 @@
+---
+import MainArtcile from "../components/MainArticle.astro";
+import NewSection from "../components/NewSection.astro";
+import ArticleList from "../components/ArticleList.astro";
+import Paginator from "../components/Paginator.astro";
+import IArticle from "../interfaces/IArtcile";
+
+export interface Props {
+  articles: IArticle[];
+  endpoint: string;
+}
+
+const { articles, endpoint } = Astro.props;
+---
+
+<main>
+  <MainArtcile article={articles[0]} />
+  <NewSection articles={articles.slice(1, 4)} />
+  <ArticleList articles={articles.slice(4)} firstNumber={4} />
+  <Paginator pageNumber={1} endpoint={"/" + endpoint} />
+</main>
+
+<style lang="scss">
+  @import "../styles/_variables.scss";
+
+  main {
+    padding: 1.5rem;
+    padding-top: 0;
+
+    @media screen and (min-width: $bp-desktop) {
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5rem;
+    }
+  }
+</style>

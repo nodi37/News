@@ -1,16 +1,18 @@
 ---
 import Logo from "./Logo.astro";
+import { routes } from "../config/routes.config";
+import { capitalizeString } from "../utils/string.utlis";
 ---
 
 <header>
   <Logo />
-  <button id="menu-button" class="menu-button">&nbsp;</button>
-  <nav id="nav-menu" class="navigation">
+  <button id="menu-button" class="menu-button" aria-label="Open menu">&nbsp;</button>
+  <nav id="nav-menu" class="side-nav">
     <Logo />
-    <a href="">Law</a>
-    <a href="">Sport</a>
-    <a href="">Climate</a>
-    <a href="">Business</a>
+    {routes.map((route) => <a href={"/" + route}>{capitalizeString(route)}</a>)}
+  </nav>
+  <nav class="bar-nav">
+    {routes.map((route) => <a href={"/" + route}>{capitalizeString(route)}</a>)}
   </nav>
   <div id="menu-overlay" class="overlay">&nbsp;</div>
 
@@ -20,7 +22,7 @@ import Logo from "./Logo.astro";
     const menu = document.getElementById("nav-menu");
 
     function toggleClasses() {
-      menu.classList.toggle("navigation--visible");
+      menu.classList.toggle("side-nav--visible");
       menuOverlay.classList.toggle("overlay--visible");
     }
 
@@ -33,6 +35,12 @@ import Logo from "./Logo.astro";
   @import "../styles/_variables.scss";
 
   header {
+    @media screen and (min-width: $bp-desktop) {
+      margin-bottom: 3rem;
+      padding: 0;
+      border-bottom: 3px solid $color-gray-light;
+    }
+
     position: sticky;
     padding: 1rem 1.5rem;
     display: flex;
@@ -47,6 +55,10 @@ import Logo from "./Logo.astro";
       color: $color-black;
       background-color: currentColor;
       outline: none;
+
+      @media screen and (min-width: $bp-desktop) {
+        display: none;
+      }
 
       &::before,
       &::after {
@@ -72,7 +84,11 @@ import Logo from "./Logo.astro";
       color: $color-focus;
     }
 
-    & .navigation {
+    & .side-nav {
+      @media screen and (min-width: $bp-desktop) {
+        display: none;
+      }
+
       position: fixed;
       left: 0;
       top: 0;
@@ -128,6 +144,33 @@ import Logo from "./Logo.astro";
       &--visible {
         transform: scale(1);
         opacity: 1;
+      }
+    }
+
+    .bar-nav {
+      display: none;
+      gap: 2rem;
+
+      & a,
+      a:link,
+      a:visited {
+        color: $color-gray-dark;
+        font-size: 1.8rem;
+        font-weight: 700;
+        text-decoration: none;
+        text-transform: uppercase;
+        border-bottom: 3px solid transparent;
+        transition: color .2s, transform .2s, border-color .2s;
+
+        &:hover {
+          color: $color-accent;
+          border-color: currentColor;
+          transform: translateY(-3px);
+        }
+      }
+
+      @media screen and (min-width: $bp-desktop) {
+        display: flex;
       }
     }
   }

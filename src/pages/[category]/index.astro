@@ -1,0 +1,14 @@
+---
+import CategoryIndexPage from "../../components/CategoryIndexPage.astro";
+import Layout from "../../layouts/Layout.astro";
+import loadNews, { dummyData } from "../../services/newsService";
+
+const { category } = Astro.params;
+
+const req = await loadNews(10, 10, category);
+const articles = req.status == "ok" ? req.articles : dummyData;
+---
+
+<Layout title="N - Home">
+  <CategoryIndexPage articles={articles} endpoint={category} />
+</Layout>

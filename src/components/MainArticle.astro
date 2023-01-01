@@ -1,0 +1,101 @@
+---
+import IArticle from "../interfaces/IArtcile";
+
+interface Props {
+  article: IArticle;
+}
+
+const { article } = Astro.props;
+---
+
+<div class="article">
+  <img class="article__image" src={article.urlToImage} alt={'Image to article: ' + article.title} />
+  <h1 class="article__title">{article.title}</h1>
+  <span class="article__author">{article.author}</span>
+  <div class="article__col">
+    <p class="article__description">{article.description}</p>
+    <a class="article__action" href={article.url}>Read more</a>
+  </div>
+</div>
+
+<style lang="scss">
+  @import "../styles/_variables.scss";
+
+  .article {
+    @media screen and (min-width: $bp-desktop) {
+      grid-column: 1 / span 2;
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    margin-bottom: 2rem;
+
+    &__image {
+      max-height: 25rem;
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      margin-bottom: 1rem;
+
+      @media screen and (min-width: $bp-desktop) {
+        grid-column: 1 / -1;
+      }
+    }
+
+    &__title {
+      font-size: 3rem;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+      color: $color-blue-light;
+      @media screen and (min-width: $bp-desktop) {
+        grid-column: 1 / span 1;
+      }
+    }
+
+    &__author {
+      display: block;
+      color: $color-gray-light;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      @media screen and (min-width: $bp-desktop) {
+        display: none;
+      }
+    }
+
+    &__col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__description {
+      display: block;
+      color: $color-gray;
+      font-size: 1.4rem;
+      line-height: 1.6;
+      margin-bottom: 3rem;
+      @media screen and (min-width: $bp-desktop) {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+      }
+    }
+
+    &__action,
+    &__action:link,
+    &__action:visited {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background-color: $color-accent;
+      color: $color-white;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-decoration: none;
+      place-self: start;
+
+      @media screen and (min-width: $bp-desktop) {
+        margin-top: auto;
+      }
+    }
+  }
+</style>

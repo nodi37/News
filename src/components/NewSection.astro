@@ -1,14 +1,9 @@
 ---
 import IArticle from "../interfaces/IArtcile";
+import { shortenString } from "../utils/string.utlis";
 
 interface Props {
   articles: IArticle[];
-}
-
-function makeDesc(dsc: string): string {
-  const firstSlice = dsc.slice(0, 60);
-  const secondSlice = firstSlice.slice(0, firstSlice.lastIndexOf(" "));
-  return secondSlice + "...";
 }
 
 const { articles } = Astro.props;
@@ -22,7 +17,7 @@ const { articles } = Astro.props;
       <a class="new-arts__link" href={art.url}>
         <div class="new-arts__art">
           <h4 class="new-arts__art-title">{art.title}</h4>
-          <p class="new-arts__art-dsc">{makeDesc(art.description)}</p>
+          <p class="new-arts__art-dsc">{shortenString(art.description, 60)}</p>
         </div>
       </a>
     ))
@@ -34,6 +29,7 @@ const { articles } = Astro.props;
 
   .new-arts {
     padding: 2rem;
+    margin-bottom: 2rem;
     color: $color-white;
     background-color: $color-navy-dark;
 
